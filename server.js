@@ -53,6 +53,8 @@ app.use((req, res, next) => {
 app.use('/api/analyze', require('./routes/analyze'));
 app.use('/api/forms', require('./routes/forms'));
 app.use('/api/blog', require('./routes/blog'));
+// Admin panel
+app.use('/admin', require('./routes/admin'));
 
 // Page routes - serve HTML files
 const pages = ['/', '/services', '/about', '/contact', '/quote', '/blog'];

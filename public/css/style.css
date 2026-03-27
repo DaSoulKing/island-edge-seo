@@ -1520,3 +1520,50 @@ section { position: relative; z-index: 1; }
   .blog-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .checker-input-wrap { flex-direction: column; }
 }
+
+/* ============================================================
+   NAV MOBILE - hidden on desktop, shown only on mobile
+   ============================================================ */
+.nav-mobile {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .nav-mobile {
+    display: flex !important;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(5, 13, 26, 0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    flex-direction: column;
+    gap: 16px;
+    transform: translateY(-110%);
+    transition: transform var(--transition);
+    z-index: 99;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .nav-mobile.open {
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+/* ============================================================
+   CHECKER CARD - taller on desktop to match hero left side
+   ============================================================ */
+@media (min-width: 1025px) {
+  .checker-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+  }
+  .checker-title { font-size: 1.3rem; }
+  .checker-sub { font-size: 0.9rem; margin-bottom: 24px; }
+  .checker-input { padding: 14px 18px; font-size: 0.92rem; }
+  .checker-btn { padding: 14px 22px; }
+}
