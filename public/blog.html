@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Island Edge SEO</title>
+  <meta name="description" content="SEO insights, guides, and strategy from the Island Edge SEO team.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <a href="/" class="nav-logo">Island Edge <span>SEO</span></a>
+  <ul class="nav-links">
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="/services" class="nav-link">Services</a></li>
+    <li><a href="/about" class="nav-link">About</a></li>
+    <li><a href="/blog" class="nav-link">Blog</a></li>
+    <li><a href="/contact" class="nav-link">Contact</a></li>
+    <li><a href="/quote" class="nav-link nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="mobileMenu">
+  <a href="/" class="mobile-link">Home</a>
+  <a href="/services" class="mobile-link">Services</a>
+  <a href="/about" class="mobile-link">About</a>
+  <a href="/blog" class="mobile-link">Blog</a>
+  <a href="/contact" class="mobile-link">Contact</a>
+  <a href="/quote" class="mobile-link" style="color:var(--blue);">Get a Quote</a>
+</div>
+
+<div class="blog-hero">
+  <div class="container reveal">
+    <div class="section-label">Blog</div>
+    <h1 class="section-title">SEO that makes sense.</h1>
+    <p class="section-sub">Practical guides, strategy breakdowns, and industry insights from Island Edge SEO.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="blog-page-grid">
+    <div>
+      <div id="blogMainGrid" class="blog-main-grid">
+        <div style="color:var(--muted); font-size:0.85rem; padding:20px 0;">Loading posts...</div>
+      </div>
+    </div>
+    <aside class="blog-sidebar">
+      <div class="aside-card">
+        <h4>Categories</h4>
+        <div class="tag-cloud">
+          <span class="tag active" data-cat="">All</span>
+          <span class="tag" data-cat="Technical">Technical</span>
+          <span class="tag" data-cat="Strategy">Strategy</span>
+          <span class="tag" data-cat="Local SEO">Local SEO</span>
+          <span class="tag" data-cat="Content">Content</span>
+        </div>
+      </div>
+      <div class="aside-card">
+        <h4>Free SEO Check</h4>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:14px;">See how your site scores before spending a penny on optimization.</p>
+        <a href="/" class="btn btn-primary" style="width:100%; justify-content:center; font-size:0.85rem; padding:11px;">Check My Site</a>
+      </div>
+      <div class="aside-card">
+        <h4>Get a Quote</h4>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:14px;">Ready to put a strategy in place? Island Edge SEO builds proposals tailored to your goals.</p>
+        <a href="/quote" class="btn btn-ghost" style="width:100%; justify-content:center; font-size:0.85rem; padding:11px;">Request a Proposal</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Island Edge <span>SEO</span></div>
+        <p class="footer-desc">Search engine optimization that actually moves the needle. Honest work, real results.</p>
+      </div>
+      <div class="footer-col"><h5>Services</h5><ul>
+        <li><a href="/services">Technical SEO</a></li><li><a href="/services">Content Strategy</a></li>
+        <li><a href="/services">Local SEO</a></li><li><a href="/services">Link Building</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Company</h5><ul>
+        <li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li>
+        <li><a href="/contact">Contact</a></li><li><a href="/quote">Get a Quote</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Get Started</h5><ul>
+        <li><a href="/quote">Request a Quote</a></li><li><a href="/contact">Contact Us</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Island Edge SEO. All rights reserved.</span>
+      <span>Built for search.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  let allPosts = [];
+
+  async function initBlog() {
+    const container = document.getElementById('blogMainGrid');
+    try {
+      const res = await fetch('/api/blog');
+      allPosts = await res.json();
+      renderPosts(allPosts);
+    } catch {
+      container.innerHTML = '<p style="color:var(--muted);">Could not load posts.</p>';
+    }
+  }
+
+  function renderPosts(posts) {
+    const container = document.getElementById('blogMainGrid');
+    if (!posts.length) {
+      container.innerHTML = '<p style="color:var(--muted); padding:40px 0; text-align:center;">No posts in this category yet.</p>';
+      return;
+    }
+    const icons = { Strategy: '🎯', Technical: '⚙️', 'Local SEO': '📍', default: '📝' };
+    container.innerHTML = posts.map(post => `
+      <a href="/blog/${post.slug}" class="blog-card-link">
+        <article class="blog-card reveal">
+          <div class="blog-card-img">${icons[post.category] || icons.default}</div>
+          <div class="blog-card-body">
+            <span class="blog-cat">${post.category || 'SEO'}</span>
+            <h3 class="blog-card-title">${post.title}</h3>
+            <p class="blog-card-excerpt">${post.excerpt || ''}</p>
+            <div class="blog-card-meta">
+              <span>${post.author || 'Island Edge SEO'}</span>
+              <span>·</span>
+              <span>${post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
+            </div>
+          </div>
+        </article>
+      </a>
+    `).join('');
+    container.querySelectorAll('.reveal').forEach(el => {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }});
+      }, { threshold: 0.1 });
+      obs.observe(el);
+    });
+  }
+
+  document.querySelectorAll('.tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      const cat = tag.dataset.cat;
+      const filtered = cat ? allPosts.filter(p => p.category === cat) : allPosts;
+      renderPosts(filtered);
+    });
+  });
+
+  initBlog();
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Island Edge SEO</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <a href="/" class="nav-logo">Island Edge <span>SEO</span></a>
+  <ul class="nav-links">
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="/services" class="nav-link">Services</a></li>
+    <li><a href="/about" class="nav-link">About</a></li>
+    <li><a href="/blog" class="nav-link">Blog</a></li>
+    <li><a href="/contact" class="nav-link">Contact</a></li>
+    <li><a href="/quote" class="nav-link nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="mobileMenu">
+  <a href="/" class="mobile-link">Home</a>
+  <a href="/services" class="mobile-link">Services</a>
+  <a href="/about" class="mobile-link">About</a>
+  <a href="/blog" class="mobile-link">Blog</a>
+  <a href="/contact" class="mobile-link">Contact</a>
+  <a href="/quote" class="mobile-link" style="color:var(--blue);">Get a Quote</a>
+</div>
+
+<div class="post-hero">
+  <div class="container">
+    <a href="/blog" style="font-size:0.82rem; color:var(--muted); display:inline-flex; align-items:center; gap:6px; margin-bottom:24px; transition:color 0.2s;"
+       onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--muted)'">
+      &larr; Back to Blog
+    </a>
+    <div class="post-meta" id="postMeta"></div>
+    <h1 class="section-title" id="postTitle" style="max-width:800px;">Loading...</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="post-layout">
+    <article class="post-body" id="postBody">
+      <div style="color:var(--muted);">Loading post...</div>
+    </article>
+    <aside class="blog-sidebar">
+      <div class="aside-card">
+        <h4>Free SEO Check</h4>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:14px;">See how your site performs right now.</p>
+        <a href="/" class="btn btn-primary" style="width:100%; justify-content:center; font-size:0.85rem; padding:11px;">Check My Site</a>
+      </div>
+      <div class="aside-card">
+        <h4>Work with Island Edge SEO</h4>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:14px;">Get a custom proposal and start climbing the rankings.</p>
+        <a href="/quote" class="btn btn-ghost" style="width:100%; justify-content:center; font-size:0.85rem; padding:11px;">Request a Quote</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer class="footer" style="margin-top:60px;">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Island Edge <span>SEO</span></div>
+        <p class="footer-desc">Search engine optimization that actually moves the needle. Honest work, real results.</p>
+      </div>
+      <div class="footer-col"><h5>Services</h5><ul>
+        <li><a href="/services">Technical SEO</a></li><li><a href="/services">Content Strategy</a></li>
+        <li><a href="/services">Local SEO</a></li><li><a href="/services">Link Building</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Company</h5><ul>
+        <li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li>
+        <li><a href="/contact">Contact</a></li><li><a href="/quote">Get a Quote</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Get Started</h5><ul>
+        <li><a href="/quote">Request a Quote</a></li><li><a href="/contact">Contact Us</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Island Edge SEO. All rights reserved.</span>
+      <span>Built for search.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  const slug = window.location.pathname.split('/blog/')[1];
+  if (slug) loadPost(slug);
+</script>
+</body>
+</html>
