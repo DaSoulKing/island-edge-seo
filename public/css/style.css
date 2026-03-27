@@ -1554,7 +1554,7 @@ section { position: relative; z-index: 1; }
 
 /* ============================================================
    CHECKER CARD - taller on desktop to match hero left side
-   ============================================================ */
+   ============================================================ 
 @media (min-width: 1025px) {
   .checker-card {
     padding: 40px;
@@ -1567,3 +1567,4 @@ section { position: relative; z-index: 1; }
   .checker-input { padding: 14px 18px; font-size: 0.92rem; }
   .checker-btn { padding: 14px 22px; }
 }
+*/
