@@ -6,7 +6,16 @@ const { contactLimit, quoteLimit } = require('../middleware/rateLimiter');
 const { body, validationResult } = require('express-validator');
 const fetch = require('node-fetch');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend = null;
+function getResend() {
+  if (!resend) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not set. Add it to your environment variables.');
+    }
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 async function verifyRecaptcha(token) {
   if (!token || !process.env.RECAPTCHA_SECRET_KEY) return true;
@@ -51,7 +60,7 @@ router.post('/contact',
       );
 
       // Send notification email
-      await resend.emails.send({
+      await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: process.env.EMAIL_TO,
         subject: `New Contact: ${name} via Island Edge SEO`,
@@ -71,7 +80,7 @@ router.post('/contact',
       });
 
       // Send confirmation to user
-      await resend.emails.send({
+      await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: email,
         subject: 'We received your message - Island Edge SEO',
@@ -127,7 +136,7 @@ router.post('/quote',
         [name, email, company || null, website || null, budget_range || null, services, details || null, req.ip]
       );
 
-      await resend.emails.send({
+      await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: process.env.EMAIL_TO,
         subject: `New Quote Request: ${name} - Island Edge SEO`,
@@ -148,7 +157,7 @@ router.post('/quote',
         `
       });
 
-      await resend.emails.send({
+      await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: email,
         subject: 'Your quote request - Island Edge SEO',
