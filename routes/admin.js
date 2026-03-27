@@ -29,6 +29,15 @@ router.use((req, res, next) => {
 });
 
 router.use(requireAdmin);
+// Safely convert postgres array (may come back as string or real array)
+function parsePgArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  // Postgres returns {a,b,c} format
+  return String(val).replace(/^{|}$/g, '').split(',').map(s => s.replace(/^"|"$/g, '').trim()).filter(Boolean);
+}
+
+
 
 // ============================================================
 // LOGIN
@@ -318,7 +327,7 @@ function blogForm(post = {}, action, error = '') {
             </div>
             <div class="form-group">
               <label class="form-label">Tags <span style="font-size:0.72rem; color:var(--muted);">(comma separated)</span></label>
-              <input type="text" name="tags" class="form-input" value="${post.tags ? post.tags.join(', ') : ''}" placeholder="SEO, Technical, 2025">
+              <input type="text" name="tags" class="form-input" value="${parsePgArray(post.tags).join(', ')}" placeholder="SEO, Technical, 2025">
             </div>
             <div class="form-group">
               <label class="form-label">Status</label>
