@@ -337,21 +337,17 @@ async function loadBlogPosts(containerId, limit) {
       return;
     }
 
-    const icons = { Strategy: '🎯', Technical: '⚙️', 'Local SEO': '📍', default: '📝' };
-
     container.innerHTML = display.map(post => `
       <a href="/blog/${post.slug}" class="blog-card-link">
         <article class="blog-card reveal">
-          <div class="blog-card-img">${icons[post.category] || icons.default}</div>
-          <div class="blog-card-body">
-            <span class="blog-cat">${post.category || 'SEO'}</span>
-            <h3 class="blog-card-title">${post.title}</h3>
-            <p class="blog-card-excerpt">${post.excerpt || ''}</p>
-            <div class="blog-card-meta">
-              <span>${post.author || 'Island Edge SEO'}</span>
-              <span>·</span>
-              <span>${post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
-            </div>
+          <div class="blog-card-top"></div>
+          <span class="blog-cat">${post.category || 'SEO'}</span>
+          <h3 class="blog-card-title">${post.title}</h3>
+          <p class="blog-card-excerpt">${post.excerpt || ''}</p>
+          <div class="blog-card-meta">
+            <span>${post.author || 'Island Edge SEO'}</span>
+            <span>&middot;</span>
+            <span>${post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
           </div>
         </article>
       </a>
