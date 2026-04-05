@@ -63,7 +63,7 @@ router.post('/contact',
       await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: process.env.EMAIL_TO,
-        subject: `New Contact: ${name} via Island Edge SEO`,
+        subject: `New Contact: ${name} via Honey Bridge SEO`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #0ea5e9;">New Contact Submission</h2>
@@ -74,7 +74,7 @@ router.post('/contact',
               ${website ? `<tr style="background:#f8f9fa;"><td style="padding:8px; font-weight:bold;">Website</td><td style="padding:8px;"><a href="${website}">${website}</a></td></tr>` : ''}
               <tr><td style="padding:8px; font-weight:bold; vertical-align:top;">Message</td><td style="padding:8px;">${message.replace(/\n/g, '<br>')}</td></tr>
             </table>
-            <p style="color:#888; font-size:12px; margin-top:24px;">Sent via Island Edge SEO contact form</p>
+            <p style="color:#888; font-size:12px; margin-top:24px;">Sent via Honey Bridge SEO contact form</p>
           </div>
         `
       });
@@ -83,14 +83,14 @@ router.post('/contact',
       await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: email,
-        subject: 'We received your message - Island Edge SEO',
+        subject: 'We received your message - Honey Bridge SEO',
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #0ea5e9;">Thanks, ${name}.</h2>
             <p>We have received your message and will get back to you within one business day.</p>
             <p>In the meantime, feel free to check out our blog for tips and insights.</p>
             <p style="margin-top:32px; color:#888; font-size:13px;">
-              Island Edge SEO<br>
+              Honey Bridge SEO<br>
               <a href="mailto:${process.env.EMAIL_FROM}" style="color:#0ea5e9;">${process.env.EMAIL_FROM}</a>
             </p>
           </div>
@@ -139,7 +139,7 @@ router.post('/quote',
       await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: process.env.EMAIL_TO,
-        subject: `New Quote Request: ${name} - Island Edge SEO`,
+        subject: `New Quote Request: ${name} - Honey Bridge SEO`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #0ea5e9;">New Quote Request</h2>
@@ -152,7 +152,7 @@ router.post('/quote',
               <tr style="background:#f8f9fa;"><td style="padding:8px; font-weight:bold; vertical-align:top;">Services</td><td style="padding:8px;">${services.join(', ')}</td></tr>
               ${details ? `<tr><td style="padding:8px; font-weight:bold; vertical-align:top;">Details</td><td style="padding:8px;">${details.replace(/\n/g, '<br>')}</td></tr>` : ''}
             </table>
-            <p style="color:#888; font-size:12px; margin-top:24px;">Sent via Island Edge SEO quote form</p>
+            <p style="color:#888; font-size:12px; margin-top:24px;">Sent via Honey Bridge SEO quote form</p>
           </div>
         `
       });
@@ -160,14 +160,14 @@ router.post('/quote',
       await getResend().emails.send({
         from: process.env.EMAIL_FROM,
         to: email,
-        subject: 'Your quote request - Island Edge SEO',
+        subject: 'Your quote request - Honey Bridge SEO',
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #0ea5e9;">Quote request received, ${name}.</h2>
             <p>We have received your request and will prepare a tailored proposal within two business days.</p>
             <p>Services requested: <strong>${services.join(', ')}</strong></p>
             <p style="margin-top:32px; color:#888; font-size:13px;">
-              Island Edge SEO<br>
+              Honey Bridge SEO<br>
               <a href="mailto:${process.env.EMAIL_FROM}" style="color:#0ea5e9;">${process.env.EMAIL_FROM}</a>
             </p>
           </div>

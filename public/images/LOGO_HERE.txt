@@ -1,0 +1,12 @@
+Place your logo file here as:
+
+  public/images/logo.png
+
+Requirements:
+- File name must be exactly: logo.png
+- Recommended height: 80px or taller (it displays at 38px in the nav, so higher resolution is fine)
+- Transparent background recommended (PNG)
+- Wide/horizontal format works best for nav bars
+- If you have a dark and light version, use the version that reads well on a dark green background
+
+The nav will automatically display it. No code changes needed.

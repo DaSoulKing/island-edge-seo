@@ -48,29 +48,29 @@ router.get('/login', (req, res) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login - Island Edge SEO</title>
+  <title>Admin Login - Honey Bridge SEO</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .login-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px 40px; width: 100%; max-width: 400px; backdrop-filter: blur(8px); }
-    .login-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .login-logo span { color: var(--blue); }
-    .login-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 32px; }
-    .login-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius); padding: 10px 14px; color: #fca5a5; font-size: 0.82rem; margin-bottom: 16px; display: ${req.query.error ? 'block' : 'none'}; }
+    .login-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 48px 40px; width: 100%; max-width: 380px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .login-logo { font-family: -apple-system, sans-serif; font-size: 1rem; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .login-logo span { color: #c9a50e; }
+    .login-sub { font-size: 0.82rem; color: #888; margin-bottom: 32px; }
+    .login-error { background: #fff5f5; border: 1px solid #fecaca; border-radius: 4px; padding: 10px 14px; color: #dc2626; font-size: 0.82rem; margin-bottom: 16px; display: ${req.query.error ? 'block' : 'none'}; }
   </style>
 </head>
 <body>
 <div class="login-wrap">
   <div class="login-card">
-    <div class="login-logo">Island Edge <span>SEO</span></div>
+    <div class="login-logo">Honey Bridge SEO</div>
     <div class="login-sub">Admin access only.</div>
     <div class="login-error">Incorrect password. Try again.</div>
     <form method="POST" action="/admin/login/submit">
-      <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-input" placeholder="Enter admin password" autofocus required>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-size:0.72rem;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">Password</label>
+        <input type="password" id="password" name="password" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;outline:none;font-family:inherit;" placeholder="Enter admin password" autofocus required>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;">Sign In</button>
+      <button type="submit" style="width:100%;margin-top:12px;padding:11px;background:#111;color:#fff;border:none;border-radius:4px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;">Sign In</button>
     </form>
   </div>
 </div>
@@ -113,51 +113,65 @@ function layout(title, body, activeNav) {
   <title>${title} - Admin</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body { display: flex; min-height: 100vh; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { display: flex; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f4f5; color: #111; font-size: 14px; }
     .admin-sidebar {
       width: 220px; flex-shrink: 0;
-      background: var(--navy-mid);
-      border-right: 1px solid var(--border);
-      padding: 28px 0;
+      background: #111;
+      padding: 24px 0;
       display: flex; flex-direction: column;
       position: fixed; top: 0; left: 0; bottom: 0;
     }
-    .admin-logo { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--white); padding: 0 20px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-    .admin-logo span { color: var(--blue); }
-    .admin-logo small { display: block; font-size: 0.68rem; color: var(--muted); font-family: var(--font-body); font-weight: 400; margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
-    .admin-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 12px; flex: 1; }
-    .admin-nav a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--radius); font-size: 0.85rem; color: var(--muted); transition: all var(--transition); text-decoration: none; }
-    .admin-nav a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
-    .admin-nav a.active { color: var(--white); background: rgba(14,165,233,0.12); }
-    .admin-nav a.active { border-left: 2px solid var(--blue); padding-left: 10px; }
-    .admin-signout { padding: 16px 20px 0; border-top: 1px solid var(--border); margin-top: auto; }
-    .admin-signout a { font-size: 0.78rem; color: var(--muted); }
+    .admin-logo { font-size: 0.82rem; font-weight: 600; color: #fff; padding: 0 20px 20px; border-bottom: 1px solid #222; margin-bottom: 12px; letter-spacing: 0.04em; }
+    .admin-logo small { display: block; font-size: 0.65rem; color: #666; font-weight: 400; margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .admin-nav { display: flex; flex-direction: column; gap: 1px; padding: 0 10px; flex: 1; }
+    .admin-nav a { display: block; padding: 8px 12px; font-size: 0.82rem; color: #888; transition: all 0.15s; text-decoration: none; border-radius: 4px; }
+    .admin-nav a:hover { color: #fff; background: #1a1a1a; }
+    .admin-nav a.active { color: #fff; background: #222; border-left: 2px solid #f4ca14; padding-left: 10px; }
+    .admin-signout { padding: 16px 20px 0; border-top: 1px solid #222; margin-top: auto; }
+    .admin-signout a { font-size: 0.75rem; color: #666; text-decoration: none; }
     .admin-signout a:hover { color: #ef4444; }
-    .admin-main { margin-left: 220px; flex: 1; padding: 40px; min-height: 100vh; }
-    .admin-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-    .admin-page-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-    .admin-table { width: 100%; border-collapse: collapse; }
-    .admin-table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border); }
-    .admin-table td { padding: 12px 14px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
-    .admin-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-    .badge-green { background: rgba(34,197,94,0.12); color: #86efac; }
-    .badge-yellow { background: rgba(245,158,11,0.12); color: #fcd34d; }
-    .badge-blue { background: rgba(14,165,233,0.12); color: #7dd3fc; }
-    .admin-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; backdrop-filter: blur(8px); }
-    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-    .stat-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-    .stat-box-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--blue); }
-    .stat-box-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-top: 4px; }
-    .admin-form .form-group { margin-bottom: 18px; }
-    .view-link { color: var(--blue); font-size: 0.78rem; }
-    .action-btn { padding: 5px 12px; border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; font-family: var(--font-body); transition: all var(--transition); }
-    .btn-danger { background: rgba(239,68,68,0.15); color: #fca5a5; }
-    .btn-danger:hover { background: rgba(239,68,68,0.3); }
-    .btn-success { background: rgba(34,197,94,0.15); color: #86efac; }
-    .btn-success:hover { background: rgba(34,197,94,0.3); }
-    .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 0.875rem; }
-    .msg-preview { max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+    .admin-main { margin-left: 220px; flex: 1; padding: 36px 40px; min-height: 100vh; }
+    .admin-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .admin-page-title { font-size: 1.25rem; font-weight: 700; color: #111; }
+    .admin-table { width: 100%; border-collapse: collapse; background: #fff; }
+    .admin-table th { text-align: left; padding: 10px 16px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; border-bottom: 1px solid #e5e5e5; background: #fafafa; font-weight: 600; }
+    .admin-table td { padding: 12px 16px; font-size: 0.84rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; color: #333; }
+    .admin-table tr:hover td { background: #fafafa; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .badge-green  { background: #dcfce7; color: #15803d; }
+    .badge-yellow { background: #fef9c3; color: #a16207; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .admin-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 6px; padding: 24px; }
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-box { background: #fff; border: 1px solid #e5e5e5; border-radius: 6px; padding: 20px; }
+    .stat-box-num { font-size: 2rem; font-weight: 800; color: #111; line-height: 1; }
+    .stat-box-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-top: 6px; }
+    .admin-form .form-group { margin-bottom: 16px; }
+    .admin-form .form-label { display: block; font-size: 0.72rem; font-weight: 600; color: #555; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .admin-form .form-input,
+    .admin-form .form-textarea,
+    .admin-form .form-select { width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.88rem; color: #111; background: #fff; outline: none; font-family: inherit; }
+    .admin-form .form-input:focus,
+    .admin-form .form-textarea:focus,
+    .admin-form .form-select:focus { border-color: #111; }
+    .admin-form .form-textarea { resize: vertical; min-height: 280px; font-family: monospace; font-size: 0.82rem; }
+    .admin-form .form-select { appearance: none; cursor: pointer; }
+    .view-link { color: #2563eb; font-size: 0.78rem; text-decoration: none; }
+    .view-link:hover { text-decoration: underline; }
+    .action-btn { padding: 5px 12px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; cursor: pointer; border: 1px solid #ddd; font-family: inherit; background: #fff; color: #333; transition: all 0.15s; }
+    .action-btn:hover { background: #f4f4f5; }
+    .btn-danger { border-color: #fecaca; color: #dc2626; background: #fff5f5; }
+    .btn-danger:hover { background: #fee2e2; }
+    .btn-success { border-color: #bbf7d0; color: #16a34a; background: #f0fdf4; }
+    .btn-success:hover { background: #dcfce7; }
+    .btn-primary { background: #111; color: #fff; border-color: #111; padding: 10px 20px; font-size: 0.82rem; }
+    .btn-primary:hover { background: #333; }
+    .btn-ghost { background: #fff; color: #333; border-color: #ddd; padding: 10px 20px; font-size: 0.82rem; }
+    .btn-ghost:hover { background: #f4f4f5; }
+    .empty-state { text-align: center; padding: 60px 20px; color: #888; font-size: 0.875rem; }
+    .msg-preview { max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #666; }
+    select.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
     @media (max-width: 768px) {
       .admin-sidebar { width: 100%; position: relative; height: auto; }
       .admin-main { margin-left: 0; padding: 20px; }
@@ -168,7 +182,7 @@ function layout(title, body, activeNav) {
 </head>
 <body>
 <aside class="admin-sidebar">
-  <div class="admin-logo">Island Edge <span>SEO</span><small>Admin Panel</small></div>
+  <div class="admin-logo">Honey Bridge SEO<small>Admin Panel</small></div>
   <nav class="admin-nav">
     ${navItems.map(item => `<a href="${item.href}" class="${activeNav === item.key ? 'active' : ''}">${item.label}</a>`).join('')}
     <a href="/" target="_blank" style="margin-top:8px;">View Site</a>
@@ -297,48 +311,48 @@ function blogForm(post = {}, action, error = '') {
     </div>
     ${error ? `<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius);padding:12px 16px;color:#fca5a5;font-size:0.82rem;margin-bottom:20px;">${error}</div>` : ''}
     <div class="admin-card admin-form">
-      <form method="POST" action="${action}">
+      <form method="POST" action="${action}" class="admin-form">
         <div style="display:grid; grid-template-columns:2fr 1fr; gap:20px;">
           <div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Title *</label>
-              <input type="text" name="title" class="form-input" value="${post.title || ''}" required placeholder="Post title">
+              <input type="text" name="title" class="form-input admin-form" value="${post.title || ''}" required placeholder="Post title">
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Slug * <span style="font-size:0.72rem; color:var(--muted);">(URL path, e.g. my-post-title)</span></label>
               <input type="text" name="slug" class="form-input" value="${post.slug || ''}" required placeholder="my-post-title">
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Excerpt <span style="font-size:0.72rem; color:var(--muted);">(shown on blog listing)</span></label>
               <textarea name="excerpt" class="form-textarea" style="min-height:80px;" placeholder="Short summary of the post...">${post.excerpt || ''}</textarea>
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Content * <span style="font-size:0.72rem; color:var(--muted);">(HTML supported)</span></label>
               <textarea name="content" class="form-textarea" style="min-height:320px;" required placeholder="&lt;p&gt;Write your post content here. HTML tags are supported.&lt;/p&gt;">${post.content || ''}</textarea>
             </div>
           </div>
           <div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Category</label>
               <select name="category" class="form-select">
                 <option value="">None</option>
                 ${['Strategy','Technical','Local SEO','Content','Link Building','E-commerce'].map(c => `<option value="${c}" ${post.category === c ? 'selected' : ''}>${c}</option>`).join('')}
               </select>
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Tags <span style="font-size:0.72rem; color:var(--muted);">(comma separated)</span></label>
               <input type="text" name="tags" class="form-input" value="${parsePgArray(post.tags).join(', ')}" placeholder="SEO, Technical, 2025">
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Status</label>
               <select name="published" class="form-select">
                 <option value="false" ${!post.published ? 'selected' : ''}>Draft</option>
                 <option value="true" ${post.published ? 'selected' : ''}>Published</option>
               </select>
             </div>
-            <div class="form-group">
+            <div style="margin-bottom:16px;">
               <label class="form-label">Author</label>
-              <input type="text" name="author" class="form-input" value="${post.author || 'Island Edge SEO'}" placeholder="Island Edge SEO">
+              <input type="text" name="author" class="form-input" value="${post.author || 'Honey Bridge SEO'}" placeholder="Honey Bridge SEO">
             </div>
           </div>
         </div>
@@ -363,7 +377,7 @@ router.post('/blog/create', express.urlencoded({ extended: true }), async (req, 
       `INSERT INTO blog_posts (title, slug, excerpt, content, category, tags, published, author, published_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
       [title, slug, excerpt || null, content, category || null, tagsArr,
-       published === 'true', author || 'Island Edge SEO',
+       published === 'true', author || 'Honey Bridge SEO',
        published === 'true' ? new Date() : null]
     );
     res.redirect('/admin/blog');
@@ -389,7 +403,7 @@ router.post('/blog/update/:id', express.urlencoded({ extended: true }), async (r
       `UPDATE blog_posts SET title=$1, slug=$2, excerpt=$3, content=$4, category=$5, tags=$6,
        published=$7, author=$8, published_at=$9, updated_at=NOW() WHERE id=$10`,
       [title, slug, excerpt || null, content, category || null, tagsArr,
-       published === 'true', author || 'Island Edge SEO', publishedAt, req.params.id]
+       published === 'true', author || 'Honey Bridge SEO', publishedAt, req.params.id]
     );
     res.redirect('/admin/blog');
   } catch (err) {

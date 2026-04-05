@@ -1,4 +1,4 @@
-# Island Edge SEO - Website Template
+# Honey Bridge SEO - Website Template
 
 A full-stack SEO agency website built with Node.js, Express, PostgreSQL, and vanilla HTML/CSS/JS.
 
@@ -190,9 +190,9 @@ A simple admin interface for blog management can be added as a later phase.
 
 ---
 
-## Replacing "Island Edge SEO"
+## Replacing "Honey Bridge SEO"
 
-All instances of the brand name are exactly `Island Edge SEO` with no variations, possessives, or abbreviations. Use your editor find-and-replace to swap it globally.
+All instances of the brand name are exactly `Honey Bridge SEO` with no variations, possessives, or abbreviations. Use your editor find-and-replace to swap it globally.
 
 ---
 
@@ -206,3 +206,44 @@ All instances of the brand name are exactly `Island Edge SEO` with no variations
 - [ ] Verify Resend domain and update `EMAIL_FROM`
 - [ ] Add your actual domain to the reCAPTCHA admin console
 - [ ] Review and tighten the CSP headers in `server.js` for your domain
+
+---
+
+## Using a Squarespace Domain with Railway
+
+Squarespace can host your domain even though the backend runs on Railway. Here is how to connect them:
+
+1. In Railway, go to your service, click **Settings**, then **Domains**, then **Add Custom Domain**
+2. Type your domain (e.g. `honeybridgeseo.com`) and Railway will show you a CNAME record to add
+3. In Squarespace, go to **Settings**, then **Domains**, click your domain, then **DNS Settings**
+4. Add a CNAME record with the name `www` pointing to the value Railway gave you
+5. For the root domain (`honeybridgeseo.com` without www), add an ALIAS or ANAME record pointing to Railway, or redirect it to the www version in Squarespace
+
+DNS changes take up to 48 hours to propagate but usually happen within an hour.
+
+---
+
+## Logo
+
+Drop your logo file at:
+
+  public/images/logo.png
+
+Transparent PNG, horizontal format, dark-background-friendly. The nav displays it at 38px height automatically.
+
+---
+
+## SEO Playbook (Blog)
+
+The blog is now called SEO Playbook throughout the site. The URL stays `/blog` for simplicity. All nav links, page titles, and section headers reflect the new name.
+
+---
+
+## Score Thresholds
+
+The SEO checker uses the following colour coding:
+- Green: 98 and above
+- Yellow: 80 to 97
+- Red: below 80
+
+This reflects the non-linear nature of SEO. A score of 80 is not 80 percent of perfect. It can mean a fraction of the traffic that a score of 98 receives.

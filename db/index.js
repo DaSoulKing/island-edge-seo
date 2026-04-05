@@ -53,7 +53,7 @@ async function initDb() {
         title VARCHAR(500) NOT NULL,
         excerpt TEXT,
         content TEXT NOT NULL,
-        author VARCHAR(255) DEFAULT 'Island Edge SEO',
+        author VARCHAR(255) DEFAULT 'Honey Bridge SEO',
         category VARCHAR(100),
         tags TEXT[],
         published BOOLEAN DEFAULT FALSE,

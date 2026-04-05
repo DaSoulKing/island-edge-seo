@@ -1,4 +1,4 @@
--- Island Edge SEO - Database Schema
+-- Honey Bridge SEO - Database Schema
 -- Run this in pgAdmin Query Tool against the island_edge_seo database.
 -- Safe to run multiple times (IF NOT EXISTS throughout).
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   title        VARCHAR(500) NOT NULL,
   excerpt      TEXT,
   content      TEXT NOT NULL,
-  author       VARCHAR(255) DEFAULT 'Island Edge SEO',
+  author       VARCHAR(255) DEFAULT 'Honey Bridge SEO',
   category     VARCHAR(100),
   tags         TEXT[],
   published    BOOLEAN DEFAULT FALSE,

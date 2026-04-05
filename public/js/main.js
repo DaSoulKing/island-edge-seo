@@ -70,15 +70,15 @@ const auditList = document.getElementById('auditList');
 const ctaAfterScan = document.getElementById('ctaAfterScan');
 
 function getScoreClass(score) {
-  if (score >= 90) return 'score-good';
-  if (score >= 50) return 'score-warn';
+  if (score >= 98) return 'score-good';
+  if (score >= 80) return 'score-warn';
   return 'score-bad';
 }
 
 function getScoreColor(score) {
-  if (score >= 90) return '#22c55e';
-  if (score >= 50) return '#f59e0b';
-  return '#ef4444';
+  if (score >= 98) return '#7cba6a';
+  if (score >= 80) return '#e08522';
+  return '#c0504a';
 }
 
 function animateRing(ringEl, score) {
@@ -194,8 +194,8 @@ async function runChecker(url) {
       auditList.classList.add('visible');
     }
 
-    // Show CTA
-    ctaAfterScan.classList.add('visible');
+    // Build smart post-scan panel
+    buildScanPanel(scores, seoAudits, data.url);
 
   } catch (err) {
     checkerError.textContent = 'Could not connect. Please check your URL and try again.';
@@ -204,6 +204,62 @@ async function runChecker(url) {
     checkerLoading.classList.remove('visible');
     checkerBtn.disabled = false;
     checkerBtn.textContent = 'Analyze';
+  }
+}
+
+// Article recommendations keyed by audit failures
+const articleRecs = {
+  'document-title':    { title: 'How Page Titles Affect Your Rankings', href: '/blog/technical-seo-checklist' },
+  'meta-description':  { title: 'Writing Meta Descriptions That Win Clicks', href: '/blog/why-seo-matters-2025' },
+  'image-alt':         { title: 'Why Image Alt Text Matters More Than You Think', href: '/blog/technical-seo-checklist' },
+  'is-crawlable':      { title: 'Is Google Actually Finding Your Pages?', href: '/blog/technical-seo-checklist' },
+  'robots-txt':        { title: 'The robots.txt File Explained', href: '/blog/technical-seo-checklist' },
+  'canonical':         { title: 'Duplicate Content and How to Fix It', href: '/blog/technical-seo-checklist' },
+};
+
+function buildScanPanel(scores, seoAudits, url) {
+  const seoScore = scores.seo;
+  const perfScore = scores.performance;
+
+  // Always show warning - explain non-linear nature of SEO
+  const warningEl = document.getElementById('scanWarning');
+  const recsEl = document.getElementById('scanRecs');
+  const recListEl = document.getElementById('scanRecList');
+
+  if (!warningEl) return;
+
+  let urgency = '';
+  let detail = '';
+
+  if (seoScore >= 98) {
+    urgency = 'Strong foundation - now protect it.';
+    detail = 'Your score looks good, but SEO is not a one-time task. Scores can drop quickly from new content, site changes, or competitors gaining ground. A single unoptimised page added to your site can drag rankings across the board.';
+  } else if (seoScore >= 80) {
+    urgency = 'This score is costing you real traffic.';
+    detail = 'A score of ' + seoScore + ' may look acceptable, but SEO does not scale linearly. The difference between 80 and 98 is not 18 points of traffic - it can mean 3 to 10 times fewer visitors. Search engines reward the top positions exponentially. Sites at 95+ take the majority of clicks. Everything below them shares what is left.';
+  } else {
+    urgency = 'Critical issues are actively harming your visibility.';
+    detail = 'A score of ' + seoScore + ' means search engines are likely struggling to understand, trust, or rank your site. The gap between where you are and where customers find you is significant. Most businesses at this score are invisible for their most valuable search terms.';
+  }
+
+  warningEl.querySelector('.scan-warning-title').textContent = urgency;
+  warningEl.querySelector('.scan-warning-body').textContent = detail;
+  warningEl.classList.add('visible');
+
+  // Build article recommendations from failed audits
+  const failedIds = seoAudits.filter(a => !a.passed).map(a => a.id);
+  const matchedArticles = [];
+  failedIds.forEach(id => {
+    if (articleRecs[id] && !matchedArticles.find(a => a.href === articleRecs[id].href)) {
+      matchedArticles.push(articleRecs[id]);
+    }
+  });
+
+  if (matchedArticles.length > 0 && recListEl) {
+    recListEl.innerHTML = matchedArticles.slice(0, 3).map(a =>
+      '<div class="scan-rec-item"><a href="' + a.href + '" style="color:var(--gold-muted); font-weight:400;">' + a.title + '</a></div>'
+    ).join('');
+    recsEl.classList.add('visible');
   }
 }
 
@@ -345,7 +401,7 @@ async function loadBlogPosts(containerId, limit) {
           <h3 class="blog-card-title">${post.title}</h3>
           <p class="blog-card-excerpt">${post.excerpt || ''}</p>
           <div class="blog-card-meta">
-            <span>${post.author || 'Island Edge SEO'}</span>
+            <span>${post.author || 'Honey Bridge SEO'}</span>
             <span>&middot;</span>
             <span>${post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
           </div>
@@ -376,12 +432,12 @@ async function loadPost(slug) {
       return;
     }
     const post = await res.json();
-    document.title = `${post.title} - Island Edge SEO`;
+    document.title = `${post.title} - Honey Bridge SEO`;
     titleEl.textContent = post.title;
     bodyEl.innerHTML = post.content;
     if (metaEl) {
       metaEl.innerHTML = `
-        <span>${post.author || 'Island Edge SEO'}</span>
+        <span>${post.author || 'Honey Bridge SEO'}</span>
         <span>·</span>
         <span>${post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}</span>
         ${post.category ? `<span>·</span><span>${post.category}</span>` : ''}

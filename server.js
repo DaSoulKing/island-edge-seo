@@ -92,7 +92,7 @@ app.use((err, req, res, next) => {
 // Init DB then start
 initDb().then(() => {
   app.listen(PORT, () => {
-    console.log(`Island Edge SEO running on http://localhost:${PORT}`);
+    console.log(`Honey Bridge SEO running on http://localhost:${PORT}`);
   });
 }).catch(err => {
   console.error('Failed to initialize database:', err);
