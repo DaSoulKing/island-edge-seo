@@ -978,3 +978,31 @@ section { position: relative; z-index: 1; }
   background: var(--gold);
   width: 40px;
 }
+
+/* ============================================================
+   NAV LOGO WITH NAME
+   ============================================================ */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.nav-logo-name em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+@media (max-width: 480px) {
+  .nav-logo-name { display: none; }
+}
