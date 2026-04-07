@@ -1,4 +1,5 @@
 const express = require('express');
+const { adminBruteForceGuard, adminSlowDown } = require('../middleware/security');
 const router = express.Router();
 const { pool } = require('../db');
 
@@ -56,7 +57,7 @@ router.get('/login', (req, res) => {
     .login-logo { font-family: -apple-system, sans-serif; font-size: 1rem; font-weight: 700; color: #111; margin-bottom: 8px; }
     .login-logo span { color: #c9a50e; }
     .login-sub { font-size: 0.82rem; color: #888; margin-bottom: 32px; }
-    .login-error { background: #fff5f5; border: 1px solid #fecaca; border-radius: 4px; padding: 10px 14px; color: #dc2626; font-size: 0.82rem; margin-bottom: 16px; display: ${req.query.error ? 'block' : 'none'}; }
+    .login-error { background: #fff5f5; border: 1px solid #fecaca; border-radius: 4px; padding: 10px 14px; color: #dc2626; font-size: 0.82rem; margin-bottom: 16px; display: ${req.query.error || req.query.locked ? 'block' : 'none'}; }
   </style>
 </head>
 <body>
@@ -64,7 +65,7 @@ router.get('/login', (req, res) => {
   <div class="login-card">
     <div class="login-logo">Honey Bridge SEO</div>
     <div class="login-sub">Admin access only.</div>
-    <div class="login-error">Incorrect password. Try again.</div>
+    <div class="login-error">${req.query.locked ? 'Too many failed attempts. Try again in ' + (req.query.minutes || 15) + ' minutes.' : 'Incorrect password. Try again.'}</div>
     <form method="POST" action="/admin/login/submit">
       <div style="margin-bottom:16px;">
         <label style="display:block;font-size:0.72rem;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">Password</label>
@@ -78,12 +79,14 @@ router.get('/login', (req, res) => {
 </html>`);
 });
 
-router.post('/login/submit', express.urlencoded({ extended: false }), (req, res) => {
+router.post('/login/submit', adminSlowDown, adminBruteForceGuard, express.urlencoded({ extended: false }), (req, res) => {
   const { password } = req.body;
-  if (password === process.env.ADMIN_SECRET) {
-    res.setHeader('Set-Cookie', `adminToken=${process.env.ADMIN_SECRET}; HttpOnly; Path=/; Max-Age=86400; SameSite=Strict`);
+  if (password && password === process.env.ADMIN_SECRET) {
+    if (req.reportSuccessfulLogin) req.reportSuccessfulLogin();
+    res.setHeader('Set-Cookie', `adminToken=${process.env.ADMIN_SECRET}; HttpOnly; Path=/; Max-Age=86400; SameSite=Strict; Secure`);
     res.redirect('/admin');
   } else {
+    if (req.reportFailedLogin) req.reportFailedLogin();
     res.redirect('/admin/login?error=1');
   }
 });

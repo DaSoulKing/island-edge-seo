@@ -55,10 +55,45 @@
           Honey Bridge SEO works with businesses of all sizes, from local service providers to national e-commerce brands, but the approach is always the same: understand the goal, build the right plan, and execute with precision.
         </p>
       </div>
-      <div class="about-visual reveal">
-        <div class="about-visual-inner">
-          <div class="about-big-num">SEO</div>
-          <div style="font-size:0.82rem; color:var(--muted); margin-top:8px; letter-spacing:0.08em; text-transform:uppercase;">Done right.</div>
+      <div class="about-visual reveal" style="height:auto; flex-direction:column; padding:0; overflow:hidden; background:transparent; border:none;">
+        <div class="founder-carousel">
+          <div class="founder-slides">
+            <div class="founder-slide active">
+              <div class="founder-img-wrap">
+                <img src="/images/founder-1.jpg" alt="Co-founder" class="founder-img" loading="lazy" width="480" height="400" onerror="this.parentElement.classList.add('founder-img-missing')">
+                <div class="founder-img-placeholder">Founder Photo</div>
+              </div>
+              <div class="founder-caption">
+                <div class="founder-name">Founder Name</div>
+                <div class="founder-role">Co-founder, Honey Bridge SEO</div>
+              </div>
+            </div>
+            <div class="founder-slide">
+              <div class="founder-img-wrap">
+                <img src="/images/founder-2.jpg" alt="Co-founder" class="founder-img" loading="lazy" width="480" height="400" onerror="this.parentElement.classList.add('founder-img-missing')">
+                <div class="founder-img-placeholder">Founder Photo</div>
+              </div>
+              <div class="founder-caption">
+                <div class="founder-name">Founder Name</div>
+                <div class="founder-role">Co-founder, Honey Bridge SEO</div>
+              </div>
+            </div>
+            <div class="founder-slide">
+              <div class="founder-img-wrap">
+                <img src="/images/founder-3.jpg" alt="Co-founder" class="founder-img" loading="lazy" width="480" height="400" onerror="this.parentElement.classList.add('founder-img-missing')">
+                <div class="founder-img-placeholder">Founder Photo</div>
+              </div>
+              <div class="founder-caption">
+                <div class="founder-name">Founder Name</div>
+                <div class="founder-role">Co-founder, Honey Bridge SEO</div>
+              </div>
+            </div>
+          </div>
+          <div class="founder-dots">
+            <button class="founder-dot active" data-slide="0" aria-label="Founder 1"></button>
+            <button class="founder-dot" data-slide="1" aria-label="Founder 2"></button>
+            <button class="founder-dot" data-slide="2" aria-label="Founder 3"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -136,5 +171,35 @@
 </footer>
 
 <script src="/js/main.js"></script>
+<script>
+(function() {
+  var slides = document.querySelectorAll('.founder-slide');
+  var dots = document.querySelectorAll('.founder-dot');
+  var current = 0;
+  var timer;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startAuto() {
+    timer = setInterval(function() { goTo(current + 1); }, 4000);
+  }
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      clearInterval(timer);
+      goTo(parseInt(this.dataset.slide));
+      startAuto();
+    });
+  });
+
+  startAuto();
+})();
+</script>
 </body>
 </html>

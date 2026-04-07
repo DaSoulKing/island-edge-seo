@@ -855,3 +855,126 @@ section { position: relative; z-index: 1; }
   .academy-grid { grid-template-columns: 1fr; }
   .academy-cta-row { flex-direction: column; align-items: flex-start; }
 }
+
+/* ============================================================
+   SERVICE PAGE IMAGES
+   ============================================================ */
+.service-detail-visual {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.service-img-fallback {
+  position: relative;
+  z-index: 1;
+}
+
+.service-img + .service-img-fallback {
+  display: none;
+}
+
+/* ============================================================
+   FOUNDER CAROUSEL
+   ============================================================ */
+.founder-carousel {
+  width: 100%;
+}
+
+.founder-slides {
+  position: relative;
+  width: 100%;
+}
+
+.founder-slide {
+  display: none;
+}
+
+.founder-slide.active {
+  display: block;
+}
+
+.founder-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.5;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border);
+}
+
+.founder-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: opacity 0.4s ease;
+}
+
+.founder-img-placeholder {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.founder-img-missing .founder-img { display: none; }
+.founder-img-missing .founder-img-placeholder { display: flex; }
+
+.founder-caption {
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.founder-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.founder-role {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--gold-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.founder-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.founder-dot {
+  width: 24px;
+  height: 2px;
+  background: var(--border-subtle);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), width var(--transition);
+  padding: 0;
+}
+
+.founder-dot.active {
+  background: var(--gold);
+  width: 40px;
+}
