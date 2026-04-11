@@ -58,6 +58,8 @@ async function initDb() {
         tags TEXT[],
         published BOOLEAN DEFAULT FALSE,
         published_at TIMESTAMP,
+        is_playbook BOOLEAN DEFAULT FALSE,
+        playbook_part VARCHAR(50),
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
       );
@@ -66,6 +68,8 @@ async function initDb() {
       CREATE INDEX IF NOT EXISTS idx_seo_checks_created ON seo_checks(created_at DESC);
       CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
       CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON blog_posts(published, published_at DESC);
+      ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS is_playbook BOOLEAN DEFAULT FALSE;
+      ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS playbook_part VARCHAR(50);
     `);
 
     // Seed sample blog posts using parameterized queries to avoid quote issues

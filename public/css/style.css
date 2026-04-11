@@ -11,8 +11,8 @@
   --gold-muted:    #c9a50e;
   --amber:         #e08522;
   --cream:         #f5f0e8;
-  --cream-dim:     #c8bfa8;
-  --muted:         #6b8f76;
+  --cream-dim:     #ddd7cc;
+  --muted:         #9e9484;
   --border:        rgba(244, 202, 20, 0.2);
   --border-subtle: rgba(245, 240, 232, 0.08);
   --card-bg:       rgba(0, 41, 24, 0.7);
@@ -535,7 +535,7 @@ section { position: relative; z-index: 1; }
    ============================================================ */
 .post-hero { padding: 130px 0 50px; border-bottom: 1px solid var(--border-subtle); }
 .post-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; padding: 60px 0 110px; }
-.post-body { font-size: 0.94rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); }
+.post-body { font-size: 0.94rem; font-weight: 300; line-height: 1.9; color: var(--cream); opacity: 0.88; }
 .post-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--cream); margin: 36px 0 14px; }
 .post-body p { margin-bottom: 20px; }
 .post-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 36px; }

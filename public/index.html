@@ -280,25 +280,8 @@
       <h2 class="section-title">The SEO Playbook Series.</h2>
       <p class="section-sub">Most businesses are invisible in search not because SEO is hard, but because no one explained the fundamentals clearly. This series does exactly that.</p>
     </div>
-    <div class="academy-grid">
-      <div class="academy-card reveal">
-        <span class="academy-part">Part One</span>
-        <h3 class="academy-card-title">Why 80 Does Not Mean 80 Percent</h3>
-        <p class="academy-card-desc">SEO scores are not percentages of visibility. The relationship between score and traffic is exponential. This article explains what your number actually means for your business.</p>
-        <a href="/blog/why-seo-matters-2025" class="academy-read">Read the article</a>
-      </div>
-      <div class="academy-card reveal">
-        <span class="academy-part">Part Two</span>
-        <h3 class="academy-card-title">The Technical Foundation Every Site Needs</h3>
-        <p class="academy-card-desc">Before content or links, your site needs to be readable by search engines. A checklist of the technical issues that silently kill rankings.</p>
-        <a href="/blog/technical-seo-checklist" class="academy-read">Read the article</a>
-      </div>
-      <div class="academy-card reveal">
-        <span class="academy-part">Part Three</span>
-        <h3 class="academy-card-title">Owning Your Local Market</h3>
-        <p class="academy-card-desc">For local businesses, the map pack is the most valuable piece of real estate on the internet. Here is how to claim your position in it.</p>
-        <a href="/blog/local-seo-guide" class="academy-read">Read the article</a>
-      </div>
+    <div class="academy-grid" id="playbookGrid">
+      <div style="padding:40px; color:var(--muted); font-size:0.85rem; font-weight:300;">Loading playbook...</div>
     </div>
     <div class="academy-cta-row reveal">
       <div class="academy-cta-text">
@@ -385,6 +368,7 @@
 
 <script src="/js/main.js"></script>
 <script>
+  loadPlaybook();
   loadBlogPosts('homeBlogGrid', 3);
 </script>
 </body>

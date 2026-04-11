@@ -155,6 +155,7 @@ function layout(title, body, activeNav) {
     .admin-form .form-input,
     .admin-form .form-textarea,
     .admin-form .form-select { width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.88rem; color: #111; background: #fff; outline: none; font-family: inherit; }
+    .admin-form .form-select option { background: #fff; color: #111; }
     .admin-form .form-input:focus,
     .admin-form .form-textarea:focus,
     .admin-form .form-select:focus { border-color: #111; }
@@ -175,6 +176,9 @@ function layout(title, body, activeNav) {
     .empty-state { text-align: center; padding: 60px 20px; color: #888; font-size: 0.875rem; }
     .msg-preview { max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #666; }
     select.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+    select { background-color: #fff !important; color: #111 !important; }
+    select option { background-color: #fff !important; color: #111 !important; }
+    .admin-form select, .admin-form select option { background: #fff !important; color: #111 !important; }
     @media (max-width: 768px) {
       .admin-sidebar { width: 100%; position: relative; height: auto; }
       .admin-main { margin-left: 0; padding: 20px; }
@@ -277,13 +281,14 @@ router.get('/blog', async (req, res) => {
     <div class="admin-card">
       ${rows.length ? `
       <table class="admin-table">
-        <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Title</th><th>Category</th><th>Playbook</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
         <tbody>
           ${rows.map(p => `
             <tr>
               <td><a href="/admin/blog/edit/${p.id}" style="color:var(--white); font-weight:500;">${p.title}</a></td>
-              <td><span style="color:var(--muted); font-size:0.8rem;">${p.category || '-'}</span></td>
-              <td><span class="badge ${p.published ? 'badge-green' : 'badge-yellow'}">${p.published ? 'Published' : 'Draft'}</span></td>
+              <td><span style="color:#666; font-size:0.8rem;">${p.category || '-'}</span></td>
+              <td>${p.is_playbook ? '<span class="badge badge-yellow">Playbook</span>' : '<span style="color:#ccc; font-size:0.75rem;">-</span>'}</td>
+              <td><span class="badge ${p.published ? 'badge-green' : 'badge-yellow'}">${p.published ? 'Published' : 'Draft'}</span>${p.is_playbook ? '<span class="badge badge-blue" style="margin-left:4px;">Playbook</span>' : ''}</td>
               <td style="color:var(--muted); font-size:0.78rem;">${new Date(p.created_at).toLocaleDateString()}</td>
               <td style="display:flex; gap:6px; flex-wrap:wrap;">
                 <a href="/admin/blog/edit/${p.id}" class="action-btn" style="background:rgba(14,165,233,0.1); color:#7dd3fc;">Edit</a>
@@ -373,7 +378,7 @@ router.get('/blog/new', (req, res) => {
 });
 
 router.post('/blog/create', express.urlencoded({ extended: true }), async (req, res) => {
-  const { title, slug, excerpt, content, category, tags, published, author } = req.body;
+  const { title, slug, excerpt, content, category, tags, published, author, is_playbook, playbook_part } = req.body;
   const tagsArr = tags ? tags.split(',').map(t => t.trim()).filter(Boolean) : [];
   try {
     await pool.query(
@@ -396,7 +401,7 @@ router.get('/blog/edit/:id', async (req, res) => {
 });
 
 router.post('/blog/update/:id', express.urlencoded({ extended: true }), async (req, res) => {
-  const { title, slug, excerpt, content, category, tags, published, author } = req.body;
+  const { title, slug, excerpt, content, category, tags, published, author, is_playbook, playbook_part } = req.body;
   const tagsArr = tags ? tags.split(',').map(t => t.trim()).filter(Boolean) : [];
   try {
     const current = await pool.query('SELECT published, published_at FROM blog_posts WHERE id = $1', [req.params.id]);
@@ -404,9 +409,10 @@ router.post('/blog/update/:id', express.urlencoded({ extended: true }), async (r
     const publishedAt = (published === 'true' && !wasPublished) ? new Date() : current.rows[0]?.published_at;
     await pool.query(
       `UPDATE blog_posts SET title=$1, slug=$2, excerpt=$3, content=$4, category=$5, tags=$6,
-       published=$7, author=$8, published_at=$9, updated_at=NOW() WHERE id=$10`,
+       published=$7, author=$8, published_at=$9, updated_at=NOW(), is_playbook=$10, playbook_part=$11 WHERE id=$12`,
       [title, slug, excerpt || null, content, category || null, tagsArr,
-       published === 'true', author || 'Honey Bridge SEO', publishedAt, req.params.id]
+       published === 'true', author || 'Honey Bridge SEO', publishedAt,
+       is_playbook === 'true', playbook_part || null, req.params.id]
     );
     res.redirect('/admin/blog');
   } catch (err) {
@@ -484,7 +490,7 @@ router.get('/quotes', async (req, res) => {
               <td style="color:var(--muted); font-size:0.78rem; white-space:nowrap;">${new Date(r.created_at).toLocaleDateString()}</td>
               <td>
                 <form method="POST" action="/admin/quotes/status/${r.id}" style="display:flex; gap:4px;">
-                  <select name="status" class="form-select" style="padding:4px 8px; font-size:0.75rem; width:auto;">
+                  <select name="status" style="padding:4px 8px; font-size:0.75rem; width:auto; border:1px solid #ddd; border-radius:4px; background:#fff !important; color:#111 !important; font-family:inherit; cursor:pointer;">
                     ${['new','contacted','quoted','won','lost'].map(s => `<option value="${s}" ${r.status===s?'selected':''}>${s}</option>`).join('')}
                   </select>
                   <button class="action-btn btn-success">Save</button>

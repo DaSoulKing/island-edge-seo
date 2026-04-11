@@ -376,6 +376,34 @@ if (quoteForm) {
   });
 }
 
+
+/* ============================================================
+   PLAYBOOK LOADER
+   ============================================================ */
+async function loadPlaybook() {
+  const container = document.getElementById('playbookGrid');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/blog/playbook/list');
+    const posts = await res.json();
+    if (!posts.length) {
+      container.innerHTML = '<div style="padding:40px 32px; color:var(--muted); font-size:0.85rem; font-weight:300; grid-column:1/-1;">No playbook articles published yet.</div>';
+      return;
+    }
+    container.innerHTML = posts.map(post => `
+      <div class="academy-card reveal">
+        <span class="academy-part">${post.playbook_part || 'Playbook'}</span>
+        <h3 class="academy-card-title">${post.title}</h3>
+        <p class="academy-card-desc">${post.excerpt || ''}</p>
+        <a href="/blog/${post.slug}" class="academy-read">Read the article</a>
+      </div>
+    `).join('');
+    container.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } catch (err) {
+    container.innerHTML = '<div style="padding:40px 32px; color:var(--muted); font-size:0.85rem; grid-column:1/-1;">Could not load playbook.</div>';
+  }
+}
+
 /* ============================================================
    BLOG LOADER
    ============================================================ */
